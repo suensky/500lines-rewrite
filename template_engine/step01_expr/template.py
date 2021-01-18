@@ -74,6 +74,7 @@ class Template:
             tokens = tokenize(self._text)
             code_lines = [x.generate_code() for x in tokens]
             source_code = '\n'.join(code_lines)
+            print(f"source_code:\n {source_code}")
             self._code = compile(source_code, '', 'exec')
 
     def render(self, ctx: dict) -> str:
@@ -82,5 +83,7 @@ class Template:
         exec_ctx = (ctx or {}).copy()
         output = []
         exec_ctx[OUTPUT_VAR] = output
+        print(f"ctx: {exec_ctx}")
+        print(f"output: {output}")
         exec(self._code, None, exec_ctx)
         return "".join(output)
